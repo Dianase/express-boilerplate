@@ -15,15 +15,24 @@ app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 
+app.use(function authorization(req, res, next){
+  const apiToken = process.env.API_TOKEN
+  console.log(apiToken)
+  
+})
+
 app.get('/', (req, res) => {
   res.status(200);
   res.send('Hello, world!');
+
+
+
 })
 
 app.use(function errorHandler( error, req, res, next ) {
   let response
   if( NODE_ENV === 'production' ){
-    response = { error { message: 'server error' } }
+    response = { error: { message: 'server error' } }
   }else {
     console.error(error)
     response = { message: error.message, error }
